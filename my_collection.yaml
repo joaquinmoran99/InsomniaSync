@@ -6,16 +6,158 @@ meta:
   created: 1782145613459
   modified: 1782145613459
   description: ""
+collection:
+  - url: https://localhost:7107/api/v5/PlatPagCaja/72
+    name: PlatPagCaja
+    meta:
+      id: req_427d639bbc344fe5a6f1540e398e8b66
+      created: 1782145663335
+      modified: 1782145759014
+      isPrivate: false
+      description: ""
+      sortKey: -1782145663335
+    method: PUT
+    scripts:
+      preRequest: |-
+        const performLogin = () => {
+            return new Promise((resolve) => {
+                const url = insomnia.variables.get('base_url');
+                const usr = insomnia.variables.get('usr');
+                const pass = insomnia.variables.get('password');
+                const plat = insomnia.variables.get('plataforma');
+
+                insomnia.sendRequest({
+                    url: `${url}/v1/Login`,
+                    method: 'POST',
+                    header: { 'Content-Type': 'application/json' },
+                    body: {
+                        mode: 'raw',
+                        raw: JSON.stringify({
+                            Usuario: usr,
+                            Clave: pass,
+                            idPlataformaIntegracion: plat
+                        })
+                    }
+                }, (err, res) => {
+                    if (err || res.code !== 200) {
+                        resolve(null);
+                    } else {
+                        resolve(res.json().Data.Token);
+                    }
+                });
+            });
+        };
+
+        const token = await performLogin();
+
+        if (token) {
+            insomnia.environment.set('token', token);
+        }
+
+        const data = insomnia.iterationData.toObject();
+
+        if (data?.PlatPagCaja) {
+            insomnia.environment.set(
+                "platPagCaja",
+                JSON.stringify(data.PlatPagCaja)
+            );
+        }
+
+        if (data?.Id) {
+            insomnia.environment.set("id", data.Id);
+        }
+
+        console.log("DTO:", data?.PlatPagCaja);
+      afterResponse: >-
+        const data = insomnia.iterationData.toObject() || {};
+
+        const expected = data.Test_Result;
+
+
+        let jsonData = null;
+
+        try {
+            jsonData = insomnia.response.json();
+        } catch (e) {}
+
+
+        const resStr = JSON.stringify(jsonData || {});
+
+
+        console.log("TEST:", data.Test_Case);
+
+        console.log("STATUS:", insomnia.response.code);
+
+        console.log("RESPONSE:", jsonData);
+
+
+        // 🔹 Test base: autenticación
+
+        insomnia.test("Verificar Autorización", () => {
+            insomnia.expect(insomnia.response.code).to.not.equal(401);
+        });
+
+
+        if (insomnia.response.code !== 401) {
+
+            // ✅ CASO EXITOSO
+            if (expected === "TRUE") {
+
+                insomnia.test("PUT exitoso - Respuesta 200", () => {
+                    insomnia.expect(insomnia.response.code).to.equal(200);
+                });
+
+            } 
+            // ❌ CASOS DE ERROR
+            else {
+
+                insomnia.test(`PUT fallido - Código ${insomnia.response.code}`, () => {
+                    insomnia.expect([400,404]).to.include(insomnia.response.code);
+                });
+
+                // 👇 Evita falsos positivos
+                insomnia.test("Test_Result definido", () => {
+                    insomnia.expect(expected).to.not.equal(undefined);
+                });
+
+                insomnia.test("Mensaje de error correcto", () => {
+                    insomnia.expect(resStr).to.include(expected);
+                });
+
+                // 🔥 VALIDACIÓN IMPORTANTE: ID mismatch
+                if (data.PlatPagCaja?.Id && data.Id) {
+
+                    insomnia.test("Validación ID URL vs BODY", () => {
+
+                        const sameId = data.PlatPagCaja.Id === data.Id;
+
+                        if (!sameId) {
+                            insomnia.expect(resStr.toLowerCase()).to.include("id");
+                        } else {
+                            insomnia.expect(true).to.equal(true);
+                        }
+                    });
+                }
+            }
+        }
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
     id: jar_48e198b75ae325c42c9e90743166248f49fa07a6
     created: 1782145613478
-    modified: 1782145613478
+    modified: 1782145736711
 environments:
   name: Base Environment
   meta:
     id: env_48e198b75ae325c42c9e90743166248f49fa07a6
     created: 1782145613477
-    modified: 1782145613477
+    modified: 1782145736713
     isPrivate: false
