@@ -12,11 +12,20 @@ collection:
     meta:
       id: req_427d639bbc344fe5a6f1540e398e8b66
       created: 1782145663335
-      modified: 1782145759014
+      modified: 1782155954191
       isPrivate: false
       description: ""
       sortKey: -1782145663335
     method: PUT
+    parameters:
+      - name: Param
+        value: "2"
+        description: ""
+        disabled: false
+      - name: Param 2
+        value: "3"
+        description: ""
+        disabled: false
     scripts:
       preRequest: |-
         const performLogin = () => {
@@ -161,3 +170,32 @@ environments:
     created: 1782145613477
     modified: 1782145736713
     isPrivate: false
+  subEnvironments:
+    - name: Public
+      meta:
+        id: env_9a0284b2a406495fb49f259e6e60b7aa
+        created: 1782155986381
+        modified: 1782156103282
+        isPrivate: false
+        sortKey: 1782155986381
+      data:
+        _expected_result: El valor del campo 'UpdatedAtHasta' debe ser mayor o igual a
+          'UpdatedAtDesde'.
+        _test_case: "Error: UpdatedAtHasta anterior a UpdatedAtDesde (regla heredada de
+          FiltroAuditableValidator)"
+        base_url: https://localhost:7107/api
+        body: '[{"IdArticulo":601,"Codigo":"123456789012345678901","Cantidad":1,"IdTipoCodigoBarras":1}]'
+        cotizacionMonedas: '{"Dolar":950,"Realbr":190,"Euro":1050}'
+        id: 72
+        idArticulo: "601"
+        monedaCotizacionHistorial: '{"Cotizacion":950}'
+        password: joaquin12341254
+        platPagSucursal: '{"Id":68,"IdSucursal":1,"IdPlatPagCuenta":66,"Nombre":"A","Activa":"X"}'
+        plataforma: 2
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3MDIiLCJ1bmlxdWVfbmFtZSI6Imptb3JhbiIsIklkUGxhdGFmb3JtYSI6IjIiLCJjbGllbnRfdHlwZSI6IndlYl91c2VyIiwibmJmIjoxNzgxNzg2OTQ0LCJleHAiOjE3ODE4MDg1NDQsImlhdCI6MTc4MTc4Njk0NH0.EMVYnFNFONf7fJwbyY0OuI0i4rDEFzQ4q2X02kcKv0E
+        token_timestamp: "1781183760673"
+        usr: joaquin
+        zona: '{"Id":1,"Nombre":"A","IdTipoZona":1,"IdEmpleado":1,"Descripcion":"Descripción
+          actualizada"}'
+        platPagCaja: '{"Id":72,"IdPlatPagSucursal":68,"IdNombreCaja":160,"IncluirImporte":"S","Activa":"S","Dispositivo":{"Descripcion":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}'
+        platPagDispositivo: '{"Id":72,"IdPlatPagCaja":2}'
