@@ -1,0 +1,21 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: de pueba
+meta:
+  id: wrk_473861b1e212424988bafbf7a1c8d6fe
+  created: 1782145613459
+  modified: 1782145613459
+  description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_48e198b75ae325c42c9e90743166248f49fa07a6
+    created: 1782145613478
+    modified: 1782145613478
+environments:
+  name: Base Environment
+  meta:
+    id: env_48e198b75ae325c42c9e90743166248f49fa07a6
+    created: 1782145613477
+    modified: 1782145613477
+    isPrivate: false
